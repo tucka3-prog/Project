@@ -31,7 +31,7 @@ public class CompleteOrder {
  
         ResultSet rs = null;
         Connection conn = null;
-        PreparedStatement pstmt1 = null, pstmt2 = null, pstmt3 = null;
+        PreparedStatement pstmt1 = null, pstmt2 = null;
         
         try {
             conn = this.connect();

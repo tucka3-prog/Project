@@ -1,7 +1,5 @@
 package application;
 
-import java.util.ArrayList;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -9,22 +7,20 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class UserPanel {
 
@@ -48,7 +44,6 @@ public class UserPanel {
 			searchOption = filter.filterChoice("searchByName");
 		}
 
-
 		if (categoryID == 0 && value.equals("")) {
 			productList = apMethods.getAllProducts();
 		} else if (categoryID > 0) {
@@ -61,13 +56,13 @@ public class UserPanel {
 
 		BorderPane userScenePanel = new BorderPane();
 		userScenePanel.setLeft(table);
-		
+
 		Button top10Button = new Button("Top 10");
 		top10Button.setPrefWidth(145);
 		top10Button.setOnAction(e -> {
-	
+
 			String searchText = "top10";
-			Main.switchSceneUser(customerID, 0 , searchText , "searchTop10");
+			Main.switchSceneUser(customerID, 0, searchText, "searchTop10");
 
 		});
 
@@ -87,7 +82,7 @@ public class UserPanel {
 			UserPanel.productList.clear();
 
 		});
-		
+
 		ComboBox<String> categoryChoice = new ComboBox<>();
 		categoryChoice.getItems().addAll("Action", "Romance", "Mystery", "Horror", "Fantasy", "Drama", "Crime",
 				"Comedy", "Aventure", "Thriller", "Science fiction", "Western", "Show All");
@@ -155,14 +150,12 @@ public class UserPanel {
 
 	}
 
-
 	public static void orderScene(int productID) {
 
 		Stage secondStage = new Stage();
 		secondStage.initModality(Modality.APPLICATION_MODAL);
 		UserPanel userPanel = new UserPanel();
 		AdminPanelMethods apMethods = new AdminPanelMethods();
-
 		Filters select = new Filters();
 
 		Product product = select.selectProduct(productID);
@@ -202,17 +195,23 @@ public class UserPanel {
 			try {
 				apMethods.isInt(quantityT);
 				message.setText("Quantity must be a number");
-
 				int qty = Integer.parseInt(quantityT.getText());
-				productDetails.setQuantity(qty);
-				productDetails.setProductName(product.getProductName());
-				productDetails.setPrice(product.getUnitPrice());
-				productDetails.setTotal();
-				productDetails.setProductID(product.getProductID());
 
-				userPanel.addProductToCart(productList, productDetails);
-				message.setText("Product added to Basket!");
-				System.out.println(productList.size());
+				if (product.getUnitsInStock() < qty) {
+					message.setText("Not enough units in Stock");
+				} else if (product.getUnitsInStock() >= qty) {
+
+					productDetails.setQuantity(qty);
+					productDetails.setProductName(product.getProductName());
+					productDetails.setPrice(product.getUnitPrice());
+					productDetails.setTotal();
+					productDetails.setProductID(product.getProductID());
+
+					userPanel.addProductToCart(productList, productDetails);
+					message.setText("Product added to Basket!");
+
+				}
+
 			} catch (Exception ee) {
 
 			}
@@ -239,12 +238,12 @@ public class UserPanel {
 		order.getChildren().addAll(orderB, goBackB);
 		order.setSpacing(10);
 
-		VBox rightSide = new VBox();
-		rightSide.getChildren().addAll(productAvailable, unitsInStock, unitPrice, quantity, total, order, message);
-		rightSide.setPadding(new Insets(250, 25, 0, 0));
-		rightSide.setSpacing(10);
+		VBox centerBot = new VBox();
+		centerBot.getChildren().addAll(productAvailable, unitsInStock, unitPrice, quantity, total, order, message);
+		centerBot.setPadding(new Insets(10, 10, 10, 110));
+		centerBot.setSpacing(10);
 
-		productOrder.setRight(rightSide);
+		productOrder.setRight(centerBot);
 
 		Label nameL = new Label("Name: ");
 		Label yearL = new Label("Year released: ");
@@ -271,22 +270,37 @@ public class UserPanel {
 		leftSide.setPadding(new Insets(10, 10, 10, 10));
 		leftSide.setSpacing(10);
 
+		try {
+			String productImage = "projectImages/" + productID + ".jpg";
+			Image image2 = new Image(productImage, 200, 300, false, false);
+			leftSide.getChildren().add(new ImageView(image2));
+		} catch (Exception image) {
+			String productImage = "projectImages/" + 999 + ".png";
+			Image image2 = new Image(productImage, 200, 300, false, false);
+			leftSide.getChildren().add(new ImageView(image2));
+		}
+
 		productOrder.setLeft(leftSide);
 
 		Label descriptionL = new Label("Movie description");
 		TextArea descriptionT = new TextArea(String.valueOf(product.productDescription));
 		descriptionT.setEditable(false);
 		descriptionT.setWrapText(true);
+		descriptionT.setMinWidth(250);
+		descriptionT.setMaxWidth(350);
+		descriptionT.setMinHeight(250);
+		descriptionT.setMaxWidth(350);
 
 		VBox center = new VBox();
 
-		center.getChildren().addAll(descriptionL, descriptionT);
+		center.getChildren().addAll(descriptionL, descriptionT, centerBot);
+		center.setPadding(new Insets(10, 10, 10, 10));
 
 		productOrder.setCenter(center);
 
-		Scene scene = new Scene(productOrder, 800, 500);
-
+		Scene scene = new Scene(productOrder, 600, 530);
 		secondStage.setScene(scene);
+
 		secondStage.showAndWait();
 	}
 

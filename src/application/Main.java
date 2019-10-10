@@ -1,27 +1,10 @@
 package application;
 
-import java.util.ArrayList;
-
 import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.stage.Stage;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableView;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 public class Main extends Application {
 
@@ -43,7 +26,7 @@ public class Main extends Application {
 	public static void switchSceneAdmin(int customerID, String value, String filterChoice) {
 
 		BorderPane adminScenePanel = adminPanel.editMovie(customerID, value, filterChoice);
-		adminScene = new Scene(adminScenePanel, 650, 600);
+		adminScene = new Scene(adminScenePanel, 660, 600);
 		window.setScene(adminScene);
 	}
 
@@ -84,7 +67,7 @@ public class Main extends Application {
 			registrationScene = new Scene(registerBox, 350, 400);
 			loginScene = new Scene(loginPanel, 600, 250);
 
-			window.setScene(adminScene);
+			window.setScene(userScene);
 			window.show();
 
 		} catch (Exception e) {

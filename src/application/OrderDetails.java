@@ -1,11 +1,5 @@
 package application;
 
-import java.sql.Date;
-
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.NumberBinding;
-import javafx.beans.property.SimpleIntegerProperty;
-
 public class OrderDetails {
 	int orderID;
 	int productID;

@@ -1,31 +1,20 @@
 package application;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.sql.Date;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+
 
 public class UserPanelMethods {
 
@@ -146,10 +135,12 @@ public class UserPanelMethods {
 
 		String sqlAddItem = "INSERT INTO OrderDetails(OrderID, ProductID, Price, Quantity, Total, ShipDate)"
 				+ "VALUES(?,?,?,?,?,?)";
+		String updateQuanty = "UPDATE Products SET UnitsInStock = UnitsInStock - ? WHERE ProductID = ?";
+		String updateStock = "Update Products set ProductAvailable = 'No' where UnitsInStock = 0";
 
 		ResultSet rs = null;
 		Connection conn = null;
-		PreparedStatement pstmt1 = null, pstmt2 = null;
+		PreparedStatement pstmt1 = null, pstmt2 = null, pstmt3 = null, pstmt4 = null;
 
 		try {
 			conn = this.connect();
@@ -189,10 +180,19 @@ public class UserPanelMethods {
 				pstmt2.setDouble(3, productList.get(a).price);
 				pstmt2.setInt(4, productList.get(a).quantity);
 				pstmt2.setDouble(5, productList.get(a).total);
-				pstmt2.setString(6, shipDate);
-				//
-				pstmt2.executeUpdate();
+				pstmt2.setString(6, shipDate);		
+				pstmt2.executeUpdate();	
+				
+				pstmt3 = conn.prepareStatement(updateQuanty);
+				pstmt3.setInt(1, productList.get(a).quantity);
+				pstmt3.setInt(2, productList.get(a).productID);
+				pstmt3.executeUpdate();		
+				
 			}
+			
+			pstmt4 = conn.prepareStatement(updateStock);
+			pstmt4.executeUpdate();		
+			
 			if (productList.size() > 0) {
 				conn.commit();
 			}
@@ -215,6 +215,9 @@ public class UserPanelMethods {
 					pstmt1.close();
 				}
 				if (pstmt2 != null) {
+					pstmt2.close();
+				}
+				if (pstmt3 != null) {
 					pstmt2.close();
 				}
 				if (conn != null) {

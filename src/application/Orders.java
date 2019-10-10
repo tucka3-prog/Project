@@ -1,8 +1,5 @@
 package application;
 
-import java.sql.Date;
-import java.sql.Time;
-
 import javafx.scene.control.Button;
 
 public class Orders {
