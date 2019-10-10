@@ -8,17 +8,17 @@ import javafx.scene.control.Button;
 public class Orders {
 	public int orderID;
 	public int customerID;
-	public Date orderDate;
-	public Date shipDate;
-	public Time timestamp;
+	public String orderDate;
+	public String shipDate;
+	public String timestamp;
 	public String fulfilled;
 	public String paid;
-	public Date paymentDate;
+	public String paymentDate;
 	public Button button;
 
 
-	public Orders (int orderID, int customerID, Date orderDate, Date shipDate, Time timestamp,
-			String fulfilled, String paid, Date paymentDate) {
+	public Orders (int orderID, int customerID, String orderDate, String shipDate, String timestamp,
+			String fulfilled, String paid, String paymentDate) {
 		this.orderID = orderID;
 		this.customerID = customerID;
 		this.orderDate = orderDate;
@@ -33,7 +33,7 @@ public class Orders {
 		});
 	}
 	
-	public Orders(int orderID, int customerID, Date orderDate) {
+	public Orders(int orderID, int customerID, String orderDate) {
 		this.orderID = orderID;
 		this.customerID = customerID;
 		this.orderDate = orderDate;
@@ -51,14 +51,14 @@ public class Orders {
 	public int getCustomerID() {
 		return customerID;
 	}
-	public Date getOrderDate() {
+	public String getOrderDate() {
 		return orderDate;
 	}
 	
-	public Date getShipDate() {
+	public String getShipDate() {
 		return shipDate;
 	}
-	public Time getTimestamp() {
+	public String getTimestamp() {
 		return timestamp;
 	}
 	public String getFulfilled() {
@@ -67,7 +67,7 @@ public class Orders {
 	public String getPaid() {
 		return paid;
 	}
-	public Date getPaymentDate() {
+	public String getPaymentDate() {
 		return paymentDate;
 	}
 	public Button getButton() {

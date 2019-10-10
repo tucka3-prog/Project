@@ -12,12 +12,12 @@ public class OrderDetails {
 	Double price;
 	int quantity;
 	Double total;
-	Date shipDate;
+	String shipDate;
 	int orderDetailID;
 	String productName;
 	
 	public OrderDetails (int orderID, int productID, Double price, int quantity,
-			Double total, Date shipDate) {
+			Double total, String shipDate) {
 		this.orderID = orderID;
 		this.productID = productID;
 		this.price = price;
@@ -27,7 +27,7 @@ public class OrderDetails {
 	}
 	
 	public OrderDetails (int orderID, int productID, Double price, int quantity,
-			Double total, Date shipDate, String productName) {
+			Double total, String shipDate, String productName) {
 		this.orderID = orderID;
 		this.productID = productID;
 		this.price = price;
@@ -82,7 +82,7 @@ public class OrderDetails {
 		return total;
 	}
 	
-	public Date getShipDate() {
+	public String getShipDate() {
 		return shipDate;
 	}
 	

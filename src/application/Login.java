@@ -68,12 +68,12 @@ public class Login {
 				if (customer.get(0).equals("Admin")) {
 
 					int userID = Integer.parseInt(customer.get(3));
-					Main.switchSceneAdmin(userID);
+					Main.switchSceneAdmin(userID, "", "");
 
 				} else if (customer.get(0).equals("User")) {
 
 					int userID = Integer.parseInt(customer.get(3));
-					Main.switchSceneUser(userID, 0, "");
+					Main.switchSceneUser(userID, 0, "", "");
 
 				} else
 

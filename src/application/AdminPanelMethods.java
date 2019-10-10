@@ -282,7 +282,7 @@ public class AdminPanelMethods {
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				order = new Orders(rs.getInt("OrderID"), rs.getInt("CustomerID"), rs.getDate("OrderDate"));
+				order = new Orders(rs.getInt("OrderID"), rs.getInt("CustomerID"), rs.getString("OrderDate"));
 
 				orderList.add(order);
 			}
@@ -305,7 +305,7 @@ public class AdminPanelMethods {
 
 			while (rs.next()) {
 				orderDetails = new OrderDetails(rs.getInt("OrderID"), rs.getInt("ProductID"), rs.getDouble("Price"),
-						rs.getInt("Quantity"), rs.getDouble("Total"), rs.getDate("ShipDate"));
+						rs.getInt("Quantity"), rs.getDouble("Total"), rs.getString("ShipDate"));
 
 				orderList.add(orderDetails);
 			}
@@ -329,7 +329,7 @@ public class AdminPanelMethods {
 
 			while (rs.next()) {
 				orderDetails = new OrderDetails(rs.getInt("OrderID"), rs.getInt("ProductID"), rs.getDouble("Price"),
-						rs.getInt("Quantity"), rs.getDouble("Total"), rs.getDate("ShipDate"));
+						rs.getInt("Quantity"), rs.getDouble("Total"), rs.getString("ShipDate"));
 
 				orderList.add(orderDetails);
 			}

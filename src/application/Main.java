@@ -40,16 +40,16 @@ public class Main extends Application {
 	static Scene adminScene;
 	static Scene userScene;
 
-	public static void switchSceneAdmin(int customerID) {
+	public static void switchSceneAdmin(int customerID, String value, String filterChoice) {
 
-		BorderPane adminScenePanel = adminPanel.editMovie(customerID);
+		BorderPane adminScenePanel = adminPanel.editMovie(customerID, value, filterChoice);
 		adminScene = new Scene(adminScenePanel, 650, 600);
 		window.setScene(adminScene);
 	}
 
-	public static void switchSceneUser(int customerID, int categoryID, String value) {
+	public static void switchSceneUser(int customerID, int categoryID, String value, String seachChoice) {
 
-		BorderPane userScenePanel = userPanel.userScene(customerID, categoryID, value);
+		BorderPane userScenePanel = userPanel.userScene(customerID, categoryID, value, seachChoice);
 		userScene = new Scene(userScenePanel, 650, 600);
 		window.setScene(userScene);
 
@@ -75,16 +75,16 @@ public class Main extends Application {
 			BorderPane loginPanel = login.login();
 			HBox registerBox = registerVBox.register();
 
-			BorderPane userScenePanel = userPanel.userScene(1, 1, "");
+			BorderPane userScenePanel = userPanel.userScene(1, 1, "", "");
 			userScene = new Scene(userScenePanel, 650, 600);
 
-			BorderPane adminScenePanel = adminPanel.editMovie(1);
+			BorderPane adminScenePanel = adminPanel.editMovie(1, "", "");
 			adminScene = new Scene(adminScenePanel, 650, 600);
 
 			registrationScene = new Scene(registerBox, 350, 400);
 			loginScene = new Scene(loginPanel, 600, 250);
 
-			window.setScene(loginScene);
+			window.setScene(adminScene);
 			window.show();
 
 		} catch (Exception e) {

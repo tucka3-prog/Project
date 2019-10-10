@@ -229,10 +229,13 @@ public class Filters {
 
 		ObservableList<Product> productList = FXCollections.observableArrayList();
 		Product product;
-
+		
 		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-			pstmt.setString(1, value);
+				pstmt.setString(1, value);
+			
+
+
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -312,9 +315,9 @@ public class Filters {
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				orders = new Orders(rs.getInt("OrderID"), rs.getInt("CustomerID"), rs.getDate("OrderDate"),
-						rs.getDate("ShipDate"), rs.getTime("Timestamp"), rs.getString("Fulfilled"),
-						rs.getString("Paid"), rs.getDate("PaymentDate"));
+				orders = new Orders(rs.getInt("OrderID"), rs.getInt("CustomerID"), rs.getString("OrderDate"),
+						rs.getString("ShipDate"), rs.getString("Timestamp"), rs.getString("Fulfilled"),
+						rs.getString("Paid"), rs.getString("PaymentDate"));
 
 				orderList.add(orders);
 			}
