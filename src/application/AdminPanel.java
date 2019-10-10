@@ -203,12 +203,12 @@ public class AdminPanel {
 		option2.setMaxWidth(200);
 
 		Button option3 = new Button("Edit Customer information");
-		option3.setOnAction(e -> customerInformation());
+		option3.setOnAction(e -> customerInformation("", ""));
 		option3.setMinWidth(200);
 		option3.setMaxWidth(200);
 
 		Button option4 = new Button("Information by Order ID");
-		option4.setOnAction(e -> orderInformationID());
+		option4.setOnAction(e -> orderInformation("", ""));
 		option4.setMinWidth(200);
 		option4.setMaxWidth(200);
 
@@ -503,12 +503,12 @@ public class AdminPanel {
 		option2.setMaxWidth(200);
 
 		Button option3 = new Button("Edit Customer information");
-		option3.setOnAction(e -> customerInformation());
+		option3.setOnAction(e -> customerInformation("", ""));
 		option3.setMinWidth(200);
 		option3.setMaxWidth(200);
 
 		Button option4 = new Button("Information by Order ID");
-		option4.setOnAction(e -> orderInformationID());
+		option4.setOnAction(e -> orderInformation("", ""));
 		option4.setMinWidth(200);
 		option4.setMaxWidth(200);
 
@@ -645,106 +645,37 @@ public class AdminPanel {
 		}
 	}
 
-	public void customerInformation() {
-
-		Menu fileMenu = new Menu("File");
-
-		MenuItem logoutM = new MenuItem("Logout");
-		logoutM.setOnAction(e -> {
-
-		});
-
-		MenuItem exitM = new MenuItem("Exit");
-		exitM.setOnAction(e -> {
-			System.exit(1);
-		});
-
-		fileMenu.getItems().addAll(logoutM, exitM);
-		MenuBar menuBar = new MenuBar();
-		menuBar.getMenus().addAll(fileMenu);
+	public void customerInformation(String value, String filterChoice) {
 
 		BorderPane adminPanel = new BorderPane();
+		ObservableList<Customer> customerList = FXCollections.observableArrayList();
+		
+		if (value.equals("") || value.length() == 0) {
+			customerList = apMethods.getAllCustomers();
+			
+		} else if (value.length() >= 0) {
+			String searchOption = filter.filterChoice(filterChoice);
+			customerList = filter.searchByStringC(searchOption, "%" + value + "%");
+		}
+		
 
-		ObservableList<Customer> customerListC = apMethods.getAllCustomers();
-		TableView<Customer> table = apMethods.customerTable(customerListC);
-
-		Button option1 = new Button("Add or edit a Movie");
-		option1.setOnAction(e -> Main.switchSceneAdmin(this.customerID, "", ""));
-		option1.setMinWidth(200);
-		option1.setMaxWidth(200);
-
-		Button option2 = new Button("Add or edit Suppliers");
-		option2.setOnAction(e -> editSupplier());
-		option2.setMinWidth(200);
-		option2.setMaxWidth(200);
-
-		Button option3 = new Button("Edit Customer information");
-		option3.setOnAction(e -> customerInformation());
-		option3.setMinWidth(200);
-		option3.setMaxWidth(200);
-
-		Button option4 = new Button("Information by Order ID");
-		option4.setOnAction(e -> orderInformationID());
-		option4.setMinWidth(200);
-		option4.setMaxWidth(200);
-
-		VBox leftSide = new VBox();
-		leftSide.getChildren().addAll(option1, option2, option3, option4);
-
-		ComboBox<String> searchOptionB = new ComboBox<>();
-		searchOptionB.getItems().addAll("Search by name", "Search by lastname", "Search by Customer ID");
-		searchOptionB.setValue("Choose search option...");
-
-		HBox searchBox1 = new HBox();
-		TextField searchText1 = new TextField();
-
-		Button button1 = new Button("Search");
-		button1.setOnAction(e -> {
-
-			String searchText = searchText1.getText();
-			searchChoice(searchText, searchOptionB.getValue());
-
-		});
-
-		searchBox1.getChildren().addAll(searchOptionB, searchText1, button1);
-
-		VBox center = new VBox();
-
-		center.getChildren().addAll(searchBox1, table);
-
-		adminPanel.setLeft(leftSide);
-		adminPanel.setCenter(center);
-		adminPanel.setTop(menuBar);
-
-		Scene adminPanelScene = new Scene(adminPanel, 660, 600);
-
-		Main.window.setScene(adminPanelScene);
-
-	}
-
-	public void customerInformationSearch(String value, String filterChoice) {
-
-		BorderPane adminPanel = new BorderPane();
-
-		Menu fileMenu = new Menu("File");
-
-		MenuItem logoutM = new MenuItem("Logout");
-		logoutM.setOnAction(e -> {
-
-		});
-
-		MenuItem exitM = new MenuItem("Exit");
-		exitM.setOnAction(e -> {
-			System.exit(1);
-		});
-
-		fileMenu.getItems().addAll(logoutM, exitM);
-		MenuBar menuBar = new MenuBar();
-		menuBar.getMenus().addAll(fileMenu);
-
-		String searchOption = filter.filterChoice(filterChoice);
-		ObservableList<Customer> customerList = filter.searchByStringC(searchOption, "%" + value + "%");
 		TableView<Customer> table = apMethods.customerTable(customerList);
+		
+		Menu fileMenu = new Menu("File");
+
+		MenuItem logoutM = new MenuItem("Logout");
+		logoutM.setOnAction(e -> {
+
+		});
+
+		MenuItem exitM = new MenuItem("Exit");
+		exitM.setOnAction(e -> {
+			System.exit(1);
+		});
+
+		fileMenu.getItems().addAll(logoutM, exitM);
+		MenuBar menuBar = new MenuBar();
+		menuBar.getMenus().addAll(fileMenu);
 
 		Button option1 = new Button("Add or edit a Movie");
 		option1.setOnAction(e -> Main.switchSceneAdmin(this.customerID, "", ""));
@@ -757,12 +688,12 @@ public class AdminPanel {
 		option2.setMaxWidth(200);
 
 		Button option3 = new Button("Edit Customer information");
-		option3.setOnAction(e -> customerInformation());
+		option3.setOnAction(e -> customerInformation("", ""));
 		option3.setMinWidth(200);
 		option3.setMaxWidth(200);
 
 		Button option4 = new Button("Information by Order ID");
-		option4.setOnAction(e -> orderInformationID());
+		option4.setOnAction(e -> orderInformation("", ""));
 		option4.setMinWidth(200);
 		option4.setMaxWidth(200);
 
@@ -771,7 +702,7 @@ public class AdminPanel {
 
 		ComboBox<String> searchOptionB = new ComboBox<>();
 		searchOptionB.getItems().addAll("Search by name", "Search by lastname", "Search by Customer ID");
-		searchOptionB.setValue("Choose search option...");
+		searchOptionB.setValue("Search by name");
 
 		HBox searchBox1 = new HBox();
 		TextField searchText1 = new TextField();
@@ -799,6 +730,7 @@ public class AdminPanel {
 		Main.window.setScene(adminPanelScene);
 
 	}
+
 
 	public static void editCustomerWindow(int customerID) {
 		try {
@@ -911,12 +843,22 @@ public class AdminPanel {
 		}
 	}
 
-	public void orderInformationID() {
+	public void orderInformation(String value, String filterChoice) {
 
 		BorderPane adminPanel = new BorderPane();
+		
+		ObservableList<Orders> orderList = FXCollections.observableArrayList();
+		
+		if (value.equals("") || value.length() == 0) {
+			orderList = apMethods.getAllOrders();
+			
+		} else if (value.length() >= 0) {
+			String searchOption = filter.filterChoice(filterChoice);
+			orderList = filter.searchByStringO(searchOption, "%" + value + "%");
+		}
 
-		ObservableList<Orders> orderList = apMethods.getAllOrders();
 		TableView<Orders> table = apMethods.ordersTable(orderList);
+
 
 		Button option1 = new Button("Add or edit a Movie");
 		option1.setOnAction(e -> Main.switchSceneAdmin(this.customerID, "", ""));
@@ -929,18 +871,18 @@ public class AdminPanel {
 		option2.setMaxWidth(200);
 
 		Button option3 = new Button("Edit Customer information");
-		option3.setOnAction(e -> customerInformation());
+		option3.setOnAction(e -> customerInformation("", ""));
 		option3.setMinWidth(200);
 		option3.setMaxWidth(200);
 
 		Button option4 = new Button("Information by Order ID");
-		option4.setOnAction(e -> orderInformationID());
+		option4.setOnAction(e -> orderInformation("", ""));
 		option4.setMinWidth(200);
 		option4.setMaxWidth(200);
 
 		ComboBox<String> searchOptionB = new ComboBox<>();
 		searchOptionB.getItems().addAll("Search by Order ID", "Search by customer ID", "Search by Order Date");
-		searchOptionB.setValue("Choose search option...");
+		searchOptionB.setValue("Search by Order ID");
 
 		HBox searchBox1 = new HBox();
 		TextField searchText1 = new TextField();
@@ -986,81 +928,6 @@ public class AdminPanel {
 
 	}
 
-	public void orderInformationSearch(String value, String filterChoice) {
-
-		BorderPane adminPanel = new BorderPane();
-
-		Menu fileMenu = new Menu("File");
-		MenuItem logoutM = new MenuItem("Logout");
-		logoutM.setOnAction(e -> {
-
-		});
-
-		MenuItem exitM = new MenuItem("Exit");
-		logoutM.setOnAction(e -> {
-			System.exit(1);
-		});
-
-		fileMenu.getItems().addAll(logoutM, exitM);
-		MenuBar menuBar = new MenuBar();
-		menuBar.getMenus().addAll(fileMenu);
-
-		String searchOption = filter.filterChoice(filterChoice);
-		ObservableList<Orders> orderList = filter.searchByStringO(searchOption, "%" + value + "%");
-		TableView<Orders> table = apMethods.ordersTable(orderList);
-
-		Button option1 = new Button("Add or edit a Movie");
-		option1.setOnAction(e -> Main.switchSceneAdmin(this.customerID, "", ""));
-		option1.setMinWidth(200);
-		option1.setMaxWidth(200);
-
-		Button option2 = new Button("Add or edit Suppliers");
-		option2.setOnAction(e -> editSupplier());
-		option2.setMinWidth(200);
-		option2.setMaxWidth(200);
-
-		Button option3 = new Button("Edit Customer information");
-		option3.setOnAction(e -> customerInformation());
-		option3.setMinWidth(200);
-		option3.setMaxWidth(200);
-
-		Button option4 = new Button("Information by Order ID");
-		option4.setOnAction(e -> orderInformationID());
-		option4.setMinWidth(200);
-		option4.setMaxWidth(200);
-
-		ComboBox<String> searchOptionB = new ComboBox<>();
-		searchOptionB.getItems().addAll("Search by Order ID", "Search by customer ID", "Search by Order Date");
-		searchOptionB.setValue("Choose search option...");
-
-		HBox searchBox1 = new HBox();
-		TextField searchText1 = new TextField();
-
-		Button button1 = new Button("Search");
-		button1.setOnAction(e -> {
-
-			String searchText = searchText1.getText();
-			searchChoice(searchText, searchOptionB.getValue());
-
-		});
-
-		searchBox1.getChildren().addAll(searchOptionB, searchText1, button1);
-
-		VBox leftSide = new VBox();
-		leftSide.getChildren().addAll(option1, option2, option3, option4);
-
-		VBox center = new VBox();
-		center.getChildren().addAll(searchBox1, table);
-
-		adminPanel.setLeft(leftSide);
-		adminPanel.setCenter(center);
-		adminPanel.setTop(menuBar);
-
-		Scene adminPanelScene = new Scene(adminPanel, 660, 600);
-
-		Main.window.setScene(adminPanelScene);
-
-	}
 
 	public static void orderDetails(int orderID) {
 
@@ -1103,22 +970,22 @@ public class AdminPanel {
 			Main.switchSceneAdmin(customerID, searchText, "searchByID");
 			break;
 		case "Search by name":
-			customerInformationSearch(searchText, "searchCByName");
+			customerInformation(searchText, "searchCByName");
 			break;
 		case "Search by lastname":
-			customerInformationSearch(searchText, "searchCByLastname");
+			customerInformation(searchText, "searchCByLastname");
 			break;
 		case "Search by Customer ID":
-			customerInformationSearch(searchText, "searchCByID");
+			customerInformation(searchText, "searchCByID");
 			break;
 		case "Search by Order ID":
-			orderInformationSearch(searchText, "searchOByID");
+			orderInformation(searchText, "searchOByID");
 			break;
 		case "Search by customer ID":
-			orderInformationSearch(searchText, "searchOByCID");
+			orderInformation(searchText, "searchOByCID");
 			break;
 		case "Search by Order Date":
-			orderInformationSearch(searchText, "searchOByDate");
+			orderInformation(searchText, "searchOByDate");
 			break;
 		}
 
