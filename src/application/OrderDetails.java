@@ -26,6 +26,17 @@ public class OrderDetails {
 		this.shipDate = shipDate;
 	}
 	
+	public OrderDetails (String productName, int orderID, int productID, Double price, int quantity,
+			Double total, String shipDate) {
+		this.productName = productName;
+		this.orderID = orderID;
+		this.productID = productID;
+		this.price = price;
+		this.quantity = quantity;
+		this.total = this.price * this.quantity;
+		this.shipDate = shipDate;
+	}
+	
 	public OrderDetails (int orderID, int productID, Double price, int quantity,
 			Double total, String shipDate, String productName) {
 		this.orderID = orderID;

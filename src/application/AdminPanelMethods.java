@@ -317,7 +317,9 @@ public class AdminPanelMethods {
 
 	public ObservableList<OrderDetails> getOrderDetailsByID(int orderID) {
 
-		String sql = "SELECT OrderID, ProductID, Price, Quantity, Total, ShipDate FROM OrderDetails WHERE OrderID = ?";
+		String sql = "SELECT Products.ProductName, OrderDetails.OrderID, OrderDetails.ProductID, OrderDetails.Price,\r\n" + 
+				"OrderDetails.Quantity, OrderDetails.Total, OrderDetails.ShipDate FROM\r\n" + 
+				"Products JOIN OrderDetails on Products.ProductID = OrderDetails.ProductID WHERE OrderID = ?";
 
 		ObservableList<OrderDetails> orderList = FXCollections.observableArrayList();
 		OrderDetails orderDetails;
@@ -328,7 +330,7 @@ public class AdminPanelMethods {
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				orderDetails = new OrderDetails(rs.getInt("OrderID"), rs.getInt("ProductID"), rs.getDouble("Price"),
+				orderDetails = new OrderDetails(rs.getString("ProductName"), rs.getInt("OrderID"), rs.getInt("ProductID"), rs.getDouble("Price"),
 						rs.getInt("Quantity"), rs.getDouble("Total"), rs.getString("ShipDate"));
 
 				orderList.add(orderDetails);
@@ -479,18 +481,23 @@ public class AdminPanelMethods {
 	}
 
 	public TableView<OrderDetails> orderDetailsTable(ObservableList<OrderDetails> orders) {
+		
+		TableColumn<OrderDetails, String> productName = new TableColumn<>("Product Name");
+		productName.setCellValueFactory(new PropertyValueFactory<>("ProductName"));
+		productName.setMaxWidth(200);
+		productName.setMinWidth(200);
 
 		TableColumn<OrderDetails, String> orderID = new TableColumn<>("Order ID");
 		orderID.setCellValueFactory(new PropertyValueFactory<>("OrderID"));
 
 		TableColumn<OrderDetails, String> price = new TableColumn<>("Price");
-		price.setMaxWidth(100);
-		price.setMinWidth(100);
+		price.setMaxWidth(80);
+		price.setMinWidth(80);
 		price.setCellValueFactory(new PropertyValueFactory<>("Price"));
 
 		TableColumn<OrderDetails, String> quantity = new TableColumn<>("Quantity");
-		quantity.setMaxWidth(100);
-		quantity.setMinWidth(100);
+		quantity.setMaxWidth(80);
+		quantity.setMinWidth(80);
 		quantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
 
 		TableColumn<OrderDetails, String> total = new TableColumn<>("Sub Total");
@@ -504,27 +511,14 @@ public class AdminPanelMethods {
 		TableView<OrderDetails> table = new TableView<OrderDetails>();
 
 		table.setItems(orders);
+		table.setMinWidth(660);
 
-		table.getColumns().addAll(orderID, price, quantity, total, shipDate);
-
-		return table;
-
-	}
-
-	public TableView<Product> orderDetailsProcuctName(ObservableList<Product> product) {
-
-		TableColumn<Product, String> productName = new TableColumn<>("Product Name");
-		productName.setCellValueFactory(new PropertyValueFactory<>("ProductName"));
-
-		TableView<Product> table = new TableView<Product>();
-
-		table.setItems(product);
-
-		table.getColumns().add(productName);
+		table.getColumns().addAll(productName, orderID, price, quantity, total, shipDate);
 
 		return table;
 
 	}
+
 
 	public void isInt(TextField text) {
 		try {

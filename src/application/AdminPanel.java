@@ -1,17 +1,9 @@
 package application;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -933,23 +925,20 @@ public class AdminPanel {
 
 		AdminPanelMethods apMethods = new AdminPanelMethods();
 		BorderPane orderDetailsPanel = new BorderPane();
-		AdminPanel ap = new AdminPanel();
 
 		ObservableList<OrderDetails> orderDetails = apMethods.getOrderDetailsByID(orderID);
-		ObservableList<Product> productName = apMethods.getProductName(orderID);
 
 		TableView<OrderDetails> table = apMethods.orderDetailsTable(orderDetails);
-		TableView<Product> table1 = apMethods.orderDetailsProcuctName(productName);
 
 		HBox tables = new HBox();
 		VBox center = new VBox();
 
-		tables.getChildren().addAll(table1, table);
+		tables.getChildren().add(table);
 
 		center.getChildren().addAll(tables);
 		orderDetailsPanel.setCenter(center);
 
-		Scene orderDetailsScene = new Scene(orderDetailsPanel, 650, 400);
+		Scene orderDetailsScene = new Scene(orderDetailsPanel, 660, 400);
 
 		Stage secondStage = new Stage();
 		secondStage.initModality(Modality.APPLICATION_MODAL);
