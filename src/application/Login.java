@@ -73,7 +73,7 @@ public class Login {
 				} else if (customer.get(0).equals("User")) {
 
 					int userID = Integer.parseInt(customer.get(3));
-					Main.switchSceneUser(userID);
+					Main.switchSceneUser(userID, 0, "");
 
 				} else
 

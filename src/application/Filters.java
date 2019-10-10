@@ -255,7 +255,7 @@ public class Filters {
 		Product product;
 
 		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			if(value.equals("%" + "top10" + "%")) {
+			if(value.equals("%" + "top10" + "%") || value.equals("%" + "" + "%")) {
 		
 			}else {
 				pstmt.setString(1, value);

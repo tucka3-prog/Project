@@ -35,19 +35,32 @@ public class UserPanel {
 	Customer customer;
 	public static ObservableList<OrderDetails> productList = FXCollections.observableArrayList();
 
-	public BorderPane userScene(int customerID) {
+	public BorderPane userScene(int customerID, int categoryID, String value) {
 
 		this.customer = filter.selectCustomer(customerID);
 		this.customerID = customerID;
+		ObservableList<Product> productList = FXCollections.observableArrayList();
+		
+		String searchOption = filter.filterChoice("searchByName");
 
-		ObservableList<Product> productList = apMethods.getAllProducts();
+
+		
+			if (categoryID == 0 && value.equals("")) {
+				productList = apMethods.getAllProducts();
+			} else if (categoryID > 0) {
+				productList = filter.filterCategory(categoryID);
+			} else if (value.length() !=0) {
+				productList = filter.searchByStringUser(searchOption, "%" + value + "%");
+			}
+		
 		TableView<Product> table = upMethods.productTable(productList);
+
 		BorderPane userScenePanel = new BorderPane();
 		userScenePanel.setLeft(table);
 
 		ComboBox<String> categoryChoice = new ComboBox<>();
 		categoryChoice.getItems().addAll("Action", "Romance", "Mystery", "Horror", "Fantasy", "Drama", "Crime",
-				"Comedy", "Aventure", "Thriller", "Science fiction", "Western");
+				"Comedy", "Aventure", "Thriller", "Science fiction", "Western", "Show All");
 		categoryChoice.setOnAction(e -> {
 			switchCategory(categoryChoice.getValue());
 		});
@@ -118,7 +131,7 @@ public class UserPanel {
 		searchButton.setOnAction(e -> {
 
 			String searchText = searchText1.getText();
-			movieSearch(searchText, "searchByName");
+			Main.switchSceneUser(customerID, 0, searchText);
 
 		});
 
@@ -138,111 +151,6 @@ public class UserPanel {
 
 	}
 
-	public void categoryChoice(int category) {
-
-		customer = filter.selectCustomer(customerID);
-		ObservableList<Product> productListC = filter.filterCategory(category);
-		TableView<Product> table = upMethods.productTable(productListC);
-
-		BorderPane userScenePanel = new BorderPane();
-
-		userScenePanel.setLeft(table);
-
-		ComboBox<String> categoryChoice = new ComboBox<>();
-		categoryChoice.getItems().addAll("Action", "Romance", "Mystery", "Horror", "Fantasy", "Drama", "Crime",
-				"Comedy", "Aventure", "Thriller", "Science fiction", "Western");
-		categoryChoice.setOnAction(e -> {
-			switchCategory(categoryChoice.getValue());
-		});
-		categoryChoice.setValue("Category");
-
-		Button top10Button = new Button("Top 10");
-		top10Button.setPrefWidth(145);
-		top10Button.setOnAction(e -> {
-
-			String searchText = "top10";
-			movieSearch(searchText, "searchTop10");
-
-		});
-
-		Button clearButton = new Button("Clear Basket");
-		clearButton.setPrefWidth(145);
-		clearButton.setOnAction(e -> {
-			UserPanel.productList.clear();
-		});
-
-		Button completeButton = new Button("Confirm Order");
-		completeButton.setPrefWidth(145);
-		completeButton.setOnAction(e -> {
-			upMethods.completeOrder(this.customerID, UserPanel.productList);
-
-			if (UserPanel.productList.size() > 0) {
-				orderComplete();
-			}
-			UserPanel.productList.clear();
-
-		});
-
-		String size = "View Basket " + "[" + String.valueOf(UserPanel.productList.size()) + "]";
-		Button cartButton = new Button(size);
-		cartButton.setPrefWidth(145);
-		cartButton.setOnAction(e -> {
-			shoppingCart();
-		});
-
-		Label label1 = new Label("You can check our");
-		label1.setFont(Font.font("Boulder", FontWeight.BOLD, 16));
-		Label label2 = new Label("Sort by category");
-		label2.setFont(Font.font("Boulder", FontWeight.BOLD, 16));
-		Label label3 = new Label("Product basket");
-		label3.setFont(Font.font("Boulder", FontWeight.BOLD, 16));
-
-		VBox choice1 = new VBox();
-		VBox choice2 = new VBox();
-		VBox choices = new VBox();
-		VBox basket = new VBox();
-
-		basket.getChildren().addAll(label3, cartButton, clearButton, completeButton);
-		basket.setSpacing(15);
-
-		choice1.getChildren().addAll(label1, top10Button);
-		choice2.getChildren().addAll(label2, categoryChoice);
-		choices.getChildren().addAll(choice1, choice2);
-		choices.setSpacing(10);
-
-		VBox optionChoice = new VBox();
-		optionChoice.getChildren().addAll(choices, basket);
-		optionChoice.setSpacing(200);
-		optionChoice.setPadding(new Insets(20, 0, 0, 5));
-
-		Label searchLabel1 = new Label("Search for product");
-		TextField searchText1 = new TextField();
-		Button searchButton = new Button("Search");
-		searchButton.setOnAction(e -> {
-
-			String searchText = searchText1.getText();
-			movieSearch(searchText, "searchByName");
-
-		});
-
-		String customerName = customer.getFirstName();
-		String message = "Welcome " + customerName + "...";
-		Text welcomeMsg = new Text(message);
-		welcomeMsg.setFont(Font.font("Verdana", FontPosture.ITALIC, 20));
-		Text emptySpace = new Text("\t \t");
-
-		HBox topBox = new HBox();
-		topBox.getChildren().addAll(welcomeMsg, emptySpace, searchLabel1, searchText1, searchButton);
-
-		userScenePanel.setTop(topBox);
-
-		userScenePanel.setCenter(optionChoice);
-
-		Scene categoryScene = new Scene(userScenePanel, 650, 600);
-
-		Main.window.setScene(categoryScene);
-
-	}
 
 	public void movieSearch(String value, String filterChoice) {
 
@@ -527,40 +435,43 @@ public class UserPanel {
 	private void switchCategory(String category) {
 		switch (category) {
 		case "Action":
-			categoryChoice(1);
+			Main.switchSceneUser(customerID, 1, ""); 
 			break;
 		case "Romance":
-			categoryChoice(2);
+			Main.switchSceneUser(customerID, 2, "");
 			break;
 		case "Mystery":
-			categoryChoice(3);
+			Main.switchSceneUser(customerID, 3, "");
 			break;
 		case "Horror":
-			categoryChoice(4);
+			Main.switchSceneUser(customerID, 4, "");
 			break;
 		case "Fantasy":
-			categoryChoice(5);
+			Main.switchSceneUser(customerID, 5, "");
 			break;
 		case "Drama":
-			categoryChoice(6);
+			Main.switchSceneUser(customerID, 6, "");
 			break;
 		case "Crime":
-			categoryChoice(7);
+			Main.switchSceneUser(customerID, 7, "");
 			break;
 		case "Comedy":
-			categoryChoice(8);
+			Main.switchSceneUser(customerID, 8, "");
 			break;
 		case "Aventure":
-			categoryChoice(9);
+			Main.switchSceneUser(customerID, 9, "");
 			break;
 		case "Thriller":
-			categoryChoice(10);
+			Main.switchSceneUser(customerID, 10, "");
 			break;
 		case "Science fiction":
-			categoryChoice(11);
+			Main.switchSceneUser(customerID, 11, "");
 			break;
 		case "Western":
-			categoryChoice(12);
+			Main.switchSceneUser(customerID, 12, "");
+			break;
+		case "Show All":
+			Main.switchSceneUser(customerID, 0, "");
 			break;
 
 		}

@@ -47,9 +47,9 @@ public class Main extends Application {
 		window.setScene(adminScene);
 	}
 
-	public static void switchSceneUser(int customerID) {
+	public static void switchSceneUser(int customerID, int categoryID, String value) {
 
-		BorderPane userScenePanel = userPanel.userScene(customerID);
+		BorderPane userScenePanel = userPanel.userScene(customerID, categoryID, value);
 		userScene = new Scene(userScenePanel, 650, 600);
 		window.setScene(userScene);
 
@@ -75,7 +75,7 @@ public class Main extends Application {
 			BorderPane loginPanel = login.login();
 			HBox registerBox = registerVBox.register();
 
-			BorderPane userScenePanel = userPanel.userScene(1);
+			BorderPane userScenePanel = userPanel.userScene(1, 1, "");
 			userScene = new Scene(userScenePanel, 650, 600);
 
 			BorderPane adminScenePanel = adminPanel.editMovie(1);
