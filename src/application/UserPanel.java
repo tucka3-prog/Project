@@ -7,6 +7,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -139,11 +142,31 @@ public class UserPanel {
 		Text welcomeMsg = new Text(message);
 		welcomeMsg.setFont(Font.font("Verdana", FontPosture.ITALIC, 20));
 		Text emptySpace = new Text("\t \t");
+		
+		Menu fileMenu = new Menu("File");
+		MenuItem logoutM = new MenuItem("Logout");
+		logoutM.setOnAction(e -> {
+			Main.switchSceneLogin();
+		});
+
+		MenuItem exitM = new MenuItem("Exit");
+		exitM.setOnAction(e -> {
+			System.exit(1);
+		});
+
+		fileMenu.getItems().addAll(logoutM, exitM);
+		MenuBar menuBar = new MenuBar();
+		menuBar.getMenus().addAll(fileMenu);
 
 		HBox topBox = new HBox();
 		topBox.getChildren().addAll(welcomeMsg, emptySpace, searchLabel1, searchText1, searchButton);
+		
+		VBox topMenu = new VBox();
+		topMenu.getChildren().addAll(menuBar, topBox);
+		topMenu.setSpacing(5);
 
-		userScenePanel.setTop(topBox);
+
+		userScenePanel.setTop(topMenu);
 		userScenePanel.setCenter(optionChoice);
 
 		return userScenePanel;

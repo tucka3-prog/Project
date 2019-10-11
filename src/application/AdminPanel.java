@@ -1,6 +1,5 @@
 package application;
 
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -31,22 +30,6 @@ public class AdminPanel {
 	public void addMovie() {
 
 		BorderPane adminPanel = new BorderPane();
-
-		Menu fileMenu = new Menu("File");
-
-		MenuItem logoutM = new MenuItem("Logout");
-		logoutM.setOnAction(e -> {
-
-		});
-
-		MenuItem exitM = new MenuItem("Exit");
-		exitM.setOnAction(e -> {
-			System.exit(1);
-		});
-
-		fileMenu.getItems().addAll(logoutM, exitM);
-		MenuBar menuBar = new MenuBar();
-		menuBar.getMenus().addAll(fileMenu);
 
 		TextField productNameT = new TextField();
 		TextField yearT = new TextField();
@@ -97,11 +80,11 @@ public class AdminPanel {
 				String productDescription = productDescriptionT.getText();
 
 				apMethods.isDouble(rankingT);
-				messageT.setText("Ranking format should be xx.xx");
+				messageT.setText("Ranking should be a number");
 				Double ranking = Double.parseDouble(rankingT.getText());
 
 				apMethods.isDouble(unitPriceT);
-				messageT.setText("Price format should be xx.xx");
+				messageT.setText("Price should be a number");
 				Double unitPrice = Double.parseDouble(unitPriceT.getText());
 
 				String discType = apMethods.getChoiceString(discTypeT);
@@ -122,7 +105,7 @@ public class AdminPanel {
 				messageT.setText("Added successfully");
 
 			} catch (Exception exc) {
-				System.out.println("Input Format error");
+
 			}
 		});
 
@@ -140,11 +123,12 @@ public class AdminPanel {
 				noteL, noteT, supplierIDL, supplierIDT, addProduct, buttons, messageT);
 
 		center.getChildren().addAll(centerLeft, centerRight);
+		center.setPadding(new Insets(10, 10, 10, 10));
+		center.setSpacing(10);
 
 		adminPanel.setCenter(center);
-		adminPanel.setTop(menuBar);
 
-		Scene adminPanelScene = new Scene(adminPanel, 450, 450);
+		Scene adminPanelScene = new Scene(adminPanel, 410, 400);
 
 		Stage secondStage = new Stage();
 		secondStage.initModality(Modality.APPLICATION_MODAL);
@@ -157,32 +141,16 @@ public class AdminPanel {
 
 		BorderPane adminPanel = new BorderPane();
 		ObservableList<Product> productList = FXCollections.observableArrayList();
-		
+
 		if (value.equals("") || value.length() == 0) {
 			productList = apMethods.getAllProductsAdmin();
-			
+
 		} else if (value.length() >= 0) {
 			String searchOption = filter.filterChoice(filterChoice);
 			productList = filter.searchByString(searchOption, "%" + value + "%");
 		}
 
 		TableView<Product> table = apMethods.productTable(productList);
-
-		Menu fileMenu = new Menu("File");
-
-		MenuItem logoutM = new MenuItem("Logout");
-		logoutM.setOnAction(e -> {
-
-		});
-
-		MenuItem exitM = new MenuItem("Exit");
-		exitM.setOnAction(e -> {
-			System.exit(1);
-		});
-
-		fileMenu.getItems().addAll(logoutM, exitM);
-		MenuBar menuBar = new MenuBar();
-		menuBar.getMenus().addAll(fileMenu);
 
 		Button option1 = new Button("Add or edit a Movie");
 		option1.setOnAction(e -> editMovie(customerID, "", ""));
@@ -213,7 +181,6 @@ public class AdminPanel {
 
 		HBox searchBox1 = new HBox();
 		TextField searchText1 = new TextField();
-		
 
 		Button button1 = new Button("Search");
 		button1.setOnAction(e -> {
@@ -234,6 +201,22 @@ public class AdminPanel {
 
 		center.getChildren().addAll(searchBox1, table, button4);
 
+		Menu fileMenu = new Menu("File");
+
+		MenuItem logoutM = new MenuItem("Logout");
+		logoutM.setOnAction(e -> {
+			Main.switchSceneLogin();
+		});
+
+		MenuItem exitM = new MenuItem("Exit");
+		exitM.setOnAction(e -> {
+			System.exit(1);
+		});
+
+		fileMenu.getItems().addAll(logoutM, exitM);
+		MenuBar menuBar = new MenuBar();
+		menuBar.getMenus().addAll(fileMenu);
+
 		adminPanel.setLeft(leftSide);
 		adminPanel.setCenter(center);
 		adminPanel.setTop(menuBar);
@@ -241,7 +224,6 @@ public class AdminPanel {
 		return adminPanel;
 
 	}
-
 
 	public static void editMovieWindow(int productID) {
 
@@ -376,89 +358,105 @@ public class AdminPanel {
 	}
 
 	public void addNewSupplier() {
+		try {
+			BorderPane adminPanel = new BorderPane();
 
-		BorderPane adminPanel = new BorderPane();
+			TextField companyNameT = new TextField();
+			TextField contactFNameT = new TextField();
+			TextField contactLNameT = new TextField();
 
-		TextField companyNameT = new TextField();
-		TextField contactFNameT = new TextField();
-		TextField contactLNameT = new TextField();
+			ChoiceBox<String> contactTitleT = new ChoiceBox<>();
+			contactTitleT.getItems().addAll("Mr", "Mrs", "Miss", "Ms");
+			contactTitleT.setValue("Mr");
 
-		ChoiceBox<String> contactTitleT = new ChoiceBox<>();
-		contactTitleT.getItems().addAll("Mr", "Mrs", "Miss", "Ms");
-		contactTitleT.setValue("Mr");
+			TextField address1T = new TextField();
+			TextField address2T = new TextField();
+			TextField cityT = new TextField();
+			
+			TextField stateT = new TextField();
+			stateT.setMaxWidth(180);
+			TextField postalCodeT = new TextField();
+			postalCodeT.setMaxWidth(180);
+			TextField countryT = new TextField();
+			countryT.setMaxWidth(180);
+			TextField phoneT = new TextField();
+			phoneT.setMaxWidth(180);
+			TextField emailT = new TextField();
+			emailT.setMaxWidth(180);
+			TextField urlT = new TextField();
+			urlT.setMaxWidth(180);
 
-		TextField address1T = new TextField();
-		TextField address2T = new TextField();
-		TextField cityT = new TextField();
-		TextField stateT = new TextField();
-		TextField postalCodeT = new TextField();
-		TextField countryT = new TextField();
-		TextField phoneT = new TextField();
-		TextField emailT = new TextField();
-		TextField urlT = new TextField();
+			Label companyNameL = new Label("Company Name");
+			Label contactFNameL = new Label("Contact first name");
+			Label contactLNameL = new Label("Contact last name");
+			Label contactTitleL = new Label("Contact Title");
+			Label address1L = new Label("Address line 1");
+			Label address2L = new Label("Address line 2");
+			Label cityL = new Label("City");
+			Label stateL = new Label("State");
+			Label postalCodeL = new Label("Postal Code");
+			Label countryL = new Label("Country");
+			Label phoneL = new Label("Phone");
+			Label emailL = new Label("E-mail adress");
+			Label urlL = new Label("URL address");
+			Label submitT = new Label("Add Supplier");
+			Text messageT = new Text();
 
-		Label companyNameL = new Label("Company Name");
-		Label contactFNameL = new Label("Contact first name");
-		Label contactLNameL = new Label("Contact last name");
-		Label contactTitleL = new Label("Contact Title");
-		Label address1L = new Label("Address line 1");
-		Label address2L = new Label("Address line 2");
-		Label cityL = new Label("City");
-		Label stateL = new Label("State");
-		Label postalCodeL = new Label("Postal Code");
-		Label countryL = new Label("Country");
-		Label phoneL = new Label("Phone");
-		Label emailL = new Label("E-mail adress");
-		Label urlL = new Label("URL address");
-		Text messageT = new Text();
+			Button submit = new Button("Submit");
+			submit.setOnAction(e -> {
 
-		Button submit = new Button("Submit");
-		submit.setOnAction(e -> {
+				String companyName = companyNameT.getText();
+				String contactFName = contactFNameT.getText();
+				String contactLName = contactLNameT.getText();
+				String contactTitle = apMethods.getChoiceString(contactTitleT);
+				String address1 = address1T.getText();
+				String address2 = address2T.getText();
+				String city = cityT.getText();
+				String state = stateT.getText();
+				String postalCode = postalCodeT.getText();
+				String country = countryT.getText();
+				String phone = phoneT.getText();
+				String email = emailT.getText();
+				String url = urlT.getText();
 
-			String companyName = companyNameT.getText();
-			String contactFName = contactFNameT.getText();
-			String contactLName = contactLNameT.getText();
-			String contactTitle = apMethods.getChoiceString(contactTitleT);
-			String address1 = address1T.getText();
-			String address2 = address2T.getText();
-			String city = cityT.getText();
-			String state = stateT.getText();
-			String postalCode = postalCodeT.getText();
-			String country = countryT.getText();
-			String phone = phoneT.getText();
-			String email = emailT.getText();
-			String url = urlT.getText();
+				if (apMethods.isValidInput(companyName)
+						&& (apMethods.isValidInput(phone) || apMethods.isValidInput(email))) {
+					apMethods.addSupplier(companyName, contactFName, contactLName, contactTitle, address1, address2,
+							city, state, postalCode, country, phone, email, url);
+					messageT.setText("Added successfully");
+				} else
+					messageT.setText("Enter company name and contact");
 
-			apMethods.addSupplier(companyName, contactFName, contactLName, contactTitle, address1, address2, city,
-					state, postalCode, country, phone, email, url);
+			});
 
-			messageT.setText("Added successfully");
-		});
+			HBox center = new HBox();
+			VBox centerLeft = new VBox();
+			VBox centerRight = new VBox();
 
-		HBox center = new HBox();
-		VBox centerLeft = new VBox();
-		VBox centerRight = new VBox();
+			HBox buttons = new HBox();
+			buttons.getChildren().addAll(submit);
 
-		HBox buttons = new HBox();
-		buttons.getChildren().addAll(submit);
+			centerLeft.getChildren().addAll(companyNameL, companyNameT, contactFNameL, contactFNameT, contactLNameL,
+					contactLNameT, contactTitleL, contactTitleT, address1L, address1T, address2L, address2T, cityL,
+					cityT);
 
-		centerLeft.getChildren().addAll(companyNameL, companyNameT, contactFNameL, contactFNameT, contactLNameL,
-				contactLNameT, contactTitleL, contactTitleT, address1L, address1T, address2L, address2T, cityL, cityT);
+			centerRight.getChildren().addAll(stateL, stateT, postalCodeL, postalCodeT, countryL, countryT, phoneL,
+					phoneT, emailL, emailT, urlL, urlT, submitT, buttons, messageT);
 
-		centerRight.getChildren().addAll(stateL, stateT, postalCodeL, postalCodeT, countryL, countryT, phoneL, phoneT,
-				emailL, emailT, urlL, urlT, buttons, messageT);
+			center.getChildren().addAll(centerLeft, centerRight);
+			center.setPadding(new Insets(10, 10, 10, 10));
+			center.setSpacing(10);
 
-		center.getChildren().addAll(centerLeft, centerRight);
+			adminPanel.setCenter(center);
+			Scene adminPanelScene = new Scene(adminPanel, 440, 420);
 
-		adminPanel.setCenter(center);
+			Stage secondStage = new Stage();
+			secondStage.initModality(Modality.APPLICATION_MODAL);
+			secondStage.setScene(adminPanelScene);
+			secondStage.showAndWait();
+		} catch (Exception e) {
 
-		Scene adminPanelScene = new Scene(adminPanel, 450, 450);
-
-		Stage secondStage = new Stage();
-		secondStage.initModality(Modality.APPLICATION_MODAL);
-		secondStage.setScene(adminPanelScene);
-		secondStage.showAndWait();
-
+		}
 	}
 
 	public void editSupplier() {
@@ -469,7 +467,7 @@ public class AdminPanel {
 
 		MenuItem logoutM = new MenuItem("Logout");
 		logoutM.setOnAction(e -> {
-
+			Main.switchSceneLogin();
 		});
 
 		MenuItem exitM = new MenuItem("Exit");
@@ -641,23 +639,22 @@ public class AdminPanel {
 
 		BorderPane adminPanel = new BorderPane();
 		ObservableList<Customer> customerList = FXCollections.observableArrayList();
-		
+
 		if (value.equals("") || value.length() == 0) {
 			customerList = apMethods.getAllCustomers();
-			
+
 		} else if (value.length() >= 0) {
 			String searchOption = filter.filterChoice(filterChoice);
 			customerList = filter.searchByStringC(searchOption, "%" + value + "%");
 		}
-		
 
 		TableView<Customer> table = apMethods.customerTable(customerList);
-		
+
 		Menu fileMenu = new Menu("File");
 
 		MenuItem logoutM = new MenuItem("Logout");
 		logoutM.setOnAction(e -> {
-
+			Main.switchSceneLogin();
 		});
 
 		MenuItem exitM = new MenuItem("Exit");
@@ -723,7 +720,6 @@ public class AdminPanel {
 
 	}
 
-
 	public static void editCustomerWindow(int customerID) {
 		try {
 
@@ -779,8 +775,6 @@ public class AdminPanel {
 			ChoiceBox<String> accessT = new ChoiceBox<>();
 			accessT.getItems().addAll("User", "Admin");
 			accessT.setValue(customer.getAccess());
-
-			System.out.println(customer.getAccess());
 
 			Text messageT = new Text();
 
@@ -838,19 +832,18 @@ public class AdminPanel {
 	public void orderInformation(String value, String filterChoice) {
 
 		BorderPane adminPanel = new BorderPane();
-		
+
 		ObservableList<Orders> orderList = FXCollections.observableArrayList();
-		
+
 		if (value.equals("") || value.length() == 0) {
 			orderList = apMethods.getAllOrders();
-			
+
 		} else if (value.length() >= 0) {
 			String searchOption = filter.filterChoice(filterChoice);
 			orderList = filter.searchByStringO(searchOption, "%" + value + "%");
 		}
 
 		TableView<Orders> table = apMethods.ordersTable(orderList);
-
 
 		Button option1 = new Button("Add or edit a Movie");
 		option1.setOnAction(e -> Main.switchSceneAdmin(this.customerID, "", ""));
@@ -892,7 +885,7 @@ public class AdminPanel {
 		Menu fileMenu = new Menu("File");
 		MenuItem logoutM = new MenuItem("Logout");
 		logoutM.setOnAction(e -> {
-
+			Main.switchSceneLogin();
 		});
 
 		MenuItem exitM = new MenuItem("Exit");
@@ -919,7 +912,6 @@ public class AdminPanel {
 		Main.window.setScene(adminPanelScene);
 
 	}
-
 
 	public static void orderDetails(int orderID) {
 

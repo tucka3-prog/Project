@@ -109,14 +109,12 @@ public class Login {
 	public String usernameM(TextField text) {
 		String username;
 		username = text.getText();
-		System.out.println(username);
 		return username;
 	}
 
 	public String passwordM(TextField text) {
 		String password;
 		password = text.getText();
-		System.out.println(password);
 		return password;
 	}
 
@@ -149,30 +147,27 @@ public class Login {
 				access = rs.getString("Access");
 				customerID = rs.getString("CustomerID");
 				count = count + 1;
-			}		
+			}
 			if (count == 1 && access.equals("Admin")) {
 				userDetails.add("Admin");
 				userDetails.add(username);
 				userDetails.add(password);
 				userDetails.add(customerID);
 
-				
 			} else if (count == 1 && access.equals("User")) {
 				userDetails.add("User");
 				userDetails.add(username);
 				userDetails.add(password);
 				userDetails.add(customerID);
 
-			} else  {
+			} else {
 				userDetails.add("Fail");
 			}
-			
-			
+
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 		return userDetails;
 	}
-
 
 }

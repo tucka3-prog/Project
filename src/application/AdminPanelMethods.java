@@ -17,6 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class AdminPanelMethods {
 
 	Filters filter = new Filters();
+	public final int inputLength = 1;
 
 	private Connection connect() {
 		// SQLite connection string
@@ -515,13 +516,26 @@ public class AdminPanelMethods {
 		return table;
 
 	}
+	
+	public boolean isValidInput(String input) {
+
+		Boolean validation = null;
+
+		if (input.length() < inputLength)
+			validation = false;
+		else if (input.length() >= inputLength)
+			validation = true;
+
+		return validation;
+
+	}
 
 
 	public void isInt(TextField text) {
 		try {
 			int number = Integer.parseInt(text.getText());
 		} catch (NumberFormatException e) {
-			System.out.println("Format incorrect");
+
 		}
 	}
 
@@ -529,7 +543,7 @@ public class AdminPanelMethods {
 		try {
 			Double number = Double.parseDouble(text.getText());
 		} catch (NumberFormatException e) {
-			System.out.println("Format incorrect");
+
 		}
 	}
 

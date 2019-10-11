@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class Main extends Application {
 
@@ -56,18 +57,12 @@ public class Main extends Application {
 			window = primaryStage;
 
 			BorderPane loginPanel = login.login();
-			HBox registerBox = registerVBox.register();
+			VBox registerBox = registerVBox.register();
 
-			BorderPane userScenePanel = userPanel.userScene(1, 1, "", "");
-			userScene = new Scene(userScenePanel, 650, 600);
-
-			BorderPane adminScenePanel = adminPanel.editMovie(1, "", "");
-			adminScene = new Scene(adminScenePanel, 650, 600);
-
-			registrationScene = new Scene(registerBox, 350, 400);
+			registrationScene = new Scene(registerBox, 440, 420);
 			loginScene = new Scene(loginPanel, 600, 250);
 
-			window.setScene(userScene);
+			window.setScene(loginScene);
 			window.show();
 
 		} catch (Exception e) {

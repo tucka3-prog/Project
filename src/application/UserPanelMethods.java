@@ -34,17 +34,17 @@ public class UserPanelMethods {
 
 		TableColumn<Product, String> productName = new TableColumn<>("Name");
 		productName.setCellValueFactory(new PropertyValueFactory<>("productName"));
-		productName.setMinWidth(240);
-		productName.setMaxWidth(240);
+		productName.setMinWidth(210);
+		productName.setMaxWidth(210);
 
 		TableColumn<Product, String> unitPrice = new TableColumn<>("Price ($)");
-		unitPrice.setMaxWidth(70);
-		unitPrice.setMinWidth(70);
+		unitPrice.setMaxWidth(59);
+		unitPrice.setMinWidth(59);
 		unitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
 
 		TableColumn<Product, String> ranking = new TableColumn<>("Ranking");
-		ranking.setMaxWidth(70);
-		ranking.setMinWidth(70);
+		ranking.setMaxWidth(59);
+		ranking.setMinWidth(59);
 		ranking.setCellValueFactory(new PropertyValueFactory<>("ranking"));
 
 		TableColumn<Product, String> edit = new TableColumn<>("Edit");
