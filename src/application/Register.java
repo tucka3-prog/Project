@@ -122,7 +122,7 @@ public class Register {
 				}
 				
 				if (usernameCheck == username) {
-					messageT.setText("Username already exusts");
+					messageT.setText("Username already exists");
 				}
 
 				if (isValidPassword(password) && isValidInput(firstName) && isValidInput(lastName)
