@@ -1,5 +1,7 @@
 package application;
 
+import java.text.DecimalFormat;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -94,7 +96,7 @@ public class UserPanel {
 		});
 		categoryChoice.setValue("Category");
 
-		String size = "View Basket " + "[" + String.valueOf(UserPanel.productList.size()) + "]";
+		String size = "View Basket";
 		Button cartButton = new Button(size);
 		cartButton.setPrefWidth(145);
 		cartButton.setOnAction(e -> {
@@ -206,7 +208,11 @@ public class UserPanel {
 
 				double a = Double.parseDouble(unitPriceT.getText());
 				double b = Double.parseDouble(quantityT.getText());
-				totalT.setText(String.valueOf(a * b));
+				
+				DecimalFormat df = new DecimalFormat("#.##");
+				String c =  df.format(a*b);
+
+				totalT.setText(c);
 
 			} catch (Exception ee) {
 			}
