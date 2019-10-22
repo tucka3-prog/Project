@@ -20,11 +20,11 @@ import javafx.scene.text.Text;
 
 public class Login {
 
-	String usertext;
-	String userpass;
-	VBox loginBox;
-	BorderPane loginView;
-	Text failedLoginT = new Text();
+	private String usertext;
+	private String userpass;
+	private VBox loginBox;
+	private BorderPane loginView;
+	private Text failedLoginT = new Text();
 
 	public BorderPane login() {
 

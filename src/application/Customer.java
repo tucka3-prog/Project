@@ -5,32 +5,32 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
 public class Customer {
-	public int customerID;
-	public String firstName;
-	public String lastName;
-	public String address1;
-	public String address2;
-	public String city;
-	public String state;
-	public String postalCode;
-	public String country;
-	public String phone;
-	public String email;
-	public String password;
-	public String username;
-	public String access;
-	public Button button;
+	private int customerID;
+	private String firstName;
+	private String lastName;
+	private String address1;
+	private String address2;
+	private String city;
+	private String state;
+	private String postalCode;
+	private String country;
+	private String phone;
+	private String email;
+	private String password;
+	private String username;
+	private String access;
+	private Button button;
 
-	Customer(int customerID, String username, String password) {
+	public Customer(int customerID, String username, String password) {
 
 	}
 	
-	Customer(int customerID, String access) {
+	public Customer(int customerID, String access) {
 		this.customerID = customerID;
 		this.access = access;
 	}
 
-	Customer(int customerID, String firstName, String lastName, String address1, String address2, String city,
+	public Customer(int customerID, String firstName, String lastName, String address1, String address2, String city,
 			String state, String postalCode, String country, String phone, String email, String password,
 			String username, String access) {
 		this.customerID = customerID;

@@ -176,16 +176,16 @@ public class UserPanelMethods {
 
 				pstmt2 = conn.prepareStatement(sqlAddItem);
 				pstmt2.setInt(1, orderID);
-				pstmt2.setInt(2, productList.get(a).productID);
-				pstmt2.setDouble(3, productList.get(a).price);
-				pstmt2.setInt(4, productList.get(a).quantity);
-				pstmt2.setDouble(5, productList.get(a).total);
+				pstmt2.setInt(2, productList.get(a).getProductID());
+				pstmt2.setDouble(3, productList.get(a).getPrice());
+				pstmt2.setInt(4, productList.get(a).getQuantity());
+				pstmt2.setDouble(5, productList.get(a).getTotal());
 				pstmt2.setString(6, shipDate);		
 				pstmt2.executeUpdate();	
 				
 				pstmt3 = conn.prepareStatement(updateQuanty);
-				pstmt3.setInt(1, productList.get(a).quantity);
-				pstmt3.setInt(2, productList.get(a).productID);
+				pstmt3.setInt(1, productList.get(a).getQuantity());
+				pstmt3.setInt(2, productList.get(a).getProductID());
 				pstmt3.executeUpdate();		
 				
 			}

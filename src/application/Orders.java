@@ -3,15 +3,15 @@ package application;
 import javafx.scene.control.Button;
 
 public class Orders {
-	public int orderID;
-	public int customerID;
-	public String orderDate;
-	public String shipDate;
-	public String timestamp;
-	public String fulfilled;
-	public String paid;
-	public String paymentDate;
-	public Button button;
+	private int orderID;
+	private int customerID;
+	private String orderDate;
+	private String shipDate;
+	private String timestamp;
+	private String fulfilled;
+	private String paid;
+	private String paymentDate;
+	private Button button;
 
 
 	public Orders (int orderID, int customerID, String orderDate, String shipDate, String timestamp,

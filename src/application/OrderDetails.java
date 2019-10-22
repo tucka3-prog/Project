@@ -1,14 +1,14 @@
 package application;
 
 public class OrderDetails {
-	int orderID;
-	int productID;
-	Double price;
-	int quantity;
-	Double total;
-	String shipDate;
-	int orderDetailID;
-	String productName;
+	private	int orderID;
+	private	int productID;
+	private	Double price;
+	private	int quantity;
+	private Double total;
+	private	String shipDate;
+	private	int orderDetailID;
+	private	String productName;
 	
 	public OrderDetails (int orderID, int productID, Double price, int quantity,
 			Double total, String shipDate) {

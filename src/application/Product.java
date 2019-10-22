@@ -5,19 +5,19 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
 public class Product {
-	public int productID;
-	public String productName;
-	public int year;
-	public String productDescription;
-	public Double ranking;
-	public Double unitPrice;
-	public String discType;
-	public String productAvailable;
-	public int unitsInStock;
-	public String sku;
-	public String note;
-	public int supplierID;
-	public Button button;
+	private int productID;
+	private String productName;
+	private int year;
+	private String productDescription;
+	private Double ranking;
+	private Double unitPrice;
+	private String discType;
+	private String productAvailable;
+	private int unitsInStock;
+	private String sku;
+	private String note;
+	private int supplierID;
+	private Button button;
 
 
 	public Product(int productID, String productName, int year, String productDescription, Double ranking,

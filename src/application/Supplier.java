@@ -5,21 +5,21 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
 public class Supplier {
-	public int supplierID;
-	public String companyName;
-	public String contactFName;
-	public String contactLName;
-	public String contactTitle;
-	public String address1;
-	public String address2;
-	public String city;
-	public String state;
-	public String postalCode;
-	public String country;
-	public String phone;
-	public String email;
-	public String url;
-	public Button button;
+	private int supplierID;
+	private String companyName;
+	private String contactFName;
+	private String contactLName;
+	private String contactTitle;
+	private String address1;
+	private String address2;
+	private String city;
+	private String state;
+	private String postalCode;
+	private String country;
+	private String phone;
+	private String email;
+	private String url;
+	private Button button;
 	
 	public Supplier(int supplierID, String companyName, String contactFName, String contactLName, String contactTitle, 
 			String address1, String address2, String city, String state, String postalCode, String country,

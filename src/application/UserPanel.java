@@ -196,9 +196,9 @@ public class UserPanel {
 		totalL.setFont(Font.font("Arial", FontWeight.BOLD, 16));
 
 		Text message = new Text();
-		Text unitPriceT = new Text(String.valueOf(product.unitPrice));
-		Text productAvailableT = new Text(String.valueOf(product.productAvailable));
-		Text unitsInStockT = new Text(String.valueOf(product.unitsInStock));
+		Text unitPriceT = new Text(String.valueOf(product.getUnitPrice()));
+		Text productAvailableT = new Text(String.valueOf(product.getProductAvailable()));
+		Text unitsInStockT = new Text(String.valueOf(product.getUnitsInStock()));
 		Text totalT = new Text();
 		TextField quantityT = new TextField();
 		quantityT.setPrefWidth(40.0);
@@ -279,10 +279,10 @@ public class UserPanel {
 		Label rankingL = new Label("Ranking (IMDB): ");
 		Label discTypeL = new Label("Disc type: ");
 
-		Text yearT = new Text(String.valueOf(product.year));
-		Text nameT = new Text(String.valueOf(product.productName));
-		Text rankingT = new Text(String.valueOf(product.ranking));
-		Text discTypeT = new Text(String.valueOf(product.discType));
+		Text yearT = new Text(String.valueOf(product.getYear()));
+		Text nameT = new Text(String.valueOf(product.getProductName()));
+		Text rankingT = new Text(String.valueOf(product.getRanking()));
+		Text discTypeT = new Text(String.valueOf(product.getDiscType()));
 
 		HBox name = new HBox();
 		HBox year = new HBox();
@@ -312,7 +312,7 @@ public class UserPanel {
 		productOrder.setLeft(leftSide);
 
 		Label descriptionL = new Label("Movie description");
-		TextArea descriptionT = new TextArea(String.valueOf(product.productDescription));
+		TextArea descriptionT = new TextArea(String.valueOf(product.getProductDescription()));
 		descriptionT.setEditable(false);
 		descriptionT.setWrapText(true);
 		descriptionT.setMinWidth(250);
